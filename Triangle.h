@@ -11,7 +11,7 @@
 using namespace std;
 using namespace pcl;
 
-pcl::PolygonMesh Triangle(float *X, float *Y, float *Z, int size, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud1) {
+pcl::PolygonMesh Triangle(float *X, float *Y, float *Z, int size, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud1, char *filename) {
 	/*pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>());*/
 	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_smoothed(new pcl::PointCloud<pcl::PointXYZ>());
 	//PointCloud<PointXYZ> cloud1;
@@ -27,6 +27,7 @@ pcl::PolygonMesh Triangle(float *X, float *Y, float *Z, int size, pcl::PointClou
 	}
 	cloud_smoothed = cloud1;
 
+
 	// Normal estimation*  法向估计
 	pcl::NormalEstimation<pcl::PointXYZ, pcl::Normal> n;//设置法线估计对象
 	pcl::PointCloud<pcl::Normal>::Ptr normals(new pcl::PointCloud<pcl::Normal>);//存储估计的法线
@@ -36,10 +37,13 @@ pcl::PolygonMesh Triangle(float *X, float *Y, float *Z, int size, pcl::PointClou
 	n.setSearchMethod(tree1);//设置搜索方法
 	n.setKSearch(30);//设置k邻域搜素的搜索范围
 	n.compute(*normals);//估计法线存储结果到normals
+
+
 	//* normals should not contain the point normals + surface curvatures
 	// 输出法线
 	std::cout << "normals: " << normals->size() << ", " << "normals fields: " << pcl::getFieldsList(*normals) << std::endl;
-	pcl::io::savePCDFileASCII("E:\\compression_normals.pcd", *normals);
+	pcl::io::savePCDFileASCII(filename, *normals);
+
 
 	// Concatenate the XYZ and normal fields*
 	pcl::PointCloud<pcl::PointNormal>::Ptr cloud_with_normals(new pcl::PointCloud<pcl::PointNormal>);//
@@ -49,6 +53,7 @@ pcl::PolygonMesh Triangle(float *X, float *Y, float *Z, int size, pcl::PointClou
 	// Create search tree*
 	pcl::search::KdTree<pcl::PointNormal>::Ptr tree2(new pcl::search::KdTree<pcl::PointNormal>);//定义搜索树对象
 	tree2->setInputCloud(cloud_with_normals);//利用有向点云构造tree
+
 
 	// Initialize objects
 	pcl::GreedyProjectionTriangulation<pcl::PointNormal> gp3;//定义三角化对象
