@@ -1,9 +1,6 @@
 # Compression_Trianglization
- 这是计算机图形学的代码
+## 这是计算机图形学的代码
 
-
-
-#
 ##环境
 ### PCL1.8 + VS2017
 ### 或者直接将代码部分考出来，放到有 PCl + C++ 环境下IDEA
