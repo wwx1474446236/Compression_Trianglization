@@ -1,7 +1,7 @@
 # Compression_Trianglization
-## 这是计算机图形学的代码
+这是计算机图形学的代码
 
-##环境
+## 环境
 ### PCL1.8 + VS2017
 ### 或者直接将代码部分考出来，放到有 PCl + C++ 环境下IDEA
 ### 实测Linux可行，CMakelist需要自己写
@@ -25,7 +25,7 @@ link_directories(${PCL_LIBRARY_DIRS})
 
 add_definitions(${PCL_DEFINITIONS})
 
-add_executable(file_dealing 改这/MyOctree.cpp)     %改一下这
+add_executable(file_dealing 改这为地址/MyOctree.cpp)     % 复制前改一下这
 
 target_link_libraries (file_dealing ${PCL_LIBRARIES})
 
